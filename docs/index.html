@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>X-Y Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script language="javascript">
+    // Informo los valores de las iteraciones
+    function fcalcular () {
+      document.getElementById('C0F1').value='AB';
+    }
+    function crear() {
+      var NumPart = document.getElementById("NumParticipantes").value;
+      var tabla = "<table border=\"0\">";
+      /* La i representa el número de X */ 
+      for (i = 0; i <= parseInt (NumPart) + parseInt (1); i++) {
+        tabla += "<tr>";
+        /* Si es 0 ponemos la cabecera */
+        if (i==0) {
+          for (j = 0; j < NumPart; j++) {
+            var GVal=j+1;
+            tabla += "<td>" + "<input type=\"text\" value=G"+GVal+" size=\"1\" style=\"background-color: #08f563;\">" + "</td>";
+          }
+        }
+        /* Ponemos todos los valores a Y para la última fila */
+        if (i>NumPart) {
+          for (j = 0; j < NumPart; j++) {
+            tabla += "<td>" + "<input type=\"text\" value=Y size=\"1\">" + "</td>";
+          }
+          tabla += "</tr>";
+          for (j = 0; j < NumPart; j++) {
+            tabla += "<td>" + "<input type=\"text\" value=-5 size=\"1\">" + "</td>";
+          }
+        }
+        /* Ponemos todos los valores a X para la penúltima fila */
+        if (i==NumPart) {
+          for (j = 0; j < NumPart; j++) {
+            tabla += "<td>" + "<input type=\"text\" value=X size=\"1\">" + "</td>";
+          }
+          tabla += "</tr>";
+          for (j = 0; j < NumPart; j++) {
+            tabla += "<td>" + "<input type=\"text\" value=5 size=\"1\">" + "</td>";
+          }
+        }
+        var NumPartDiv = NumPart/2;
+        var NumX = i;
+        var NumY = NumPart - i;
+        var ValorX = (NumY*5)/NumX;
+        var ValorY = (NumX*5)/NumY;
+        /* Si el número de X es igual al número de Y */
+        if (i==NumPartDiv) {
+          for (j = 0; j < NumPart; j++) {
+            if (i>j) {
+              tabla += "<td>" + "<input type=\"text\" value=X size=\"1\">" + "</td>";
+            }
+            else {
+              tabla += "<td>" + "<input type=\"text\" value=Y size=\"1\">" + "</td>";
+            }
+          }
+          tabla += "</tr>";
+          for (j = 0; j < NumPart; j++) {
+            if (i>j) {
+              tabla += "<td>" + "<input type=\"text\" value=-5 size=\"1\">" + "</td>";
+            }
+            else {
+              tabla += "<td>" + "<input type=\"text\" value=5 size=\"1\">" + "</td>";
+            }
+          }
+        }
+        /* Si el número de X es menos al número de Y */
+        if (i<NumPartDiv && i!=0) {
+          for (j = 0; j < NumPart; j++) {
+            if (i>j) {
+              tabla += "<td>" + "<input type=\"text\" value=X size=\"1\">" + "</td>";
+            }
+            else {
+              tabla += "<td>" + "<input type=\"text\" value=Y size=\"1\">" + "</td>";
+            }
+          }
+          tabla += "</tr>";
+          for (j = 0; j < NumPart; j++) {
+            if (i>j) {
+              tabla += "<td>" + "<input type=\"text\" value=-"+ValorX+" size=\"1\">" + "</td>";
+            }
+            else {
+              tabla += "<td>" + "<input type=\"text\" value=5 size=\"1\">" + "</td>";
+            }
+          }
+        }
+        /* Si el número de X es mayor al número de Y */
+        if (i>NumPartDiv && i<NumPart) {
+          for (j = 0; j < NumPart; j++) {
+            if (i>j) {
+              tabla += "<td>" + "<input type=\"text\" value=X size=\"1\">" + "</td>";
+            }
+            else {
+              tabla += "<td>" + "<input type=\"text\" value=Y size=\"1\">" + "</td>";
+            }
+          }
+          tabla += "</tr>";
+          for (j = 0; j < NumPart; j++) {
+            if (i>j) {
+              tabla += "<td>" + "<input type=\"text\" value=-5 size=\"1\">" + "</td>";
+            }
+            else {
+              tabla += "<td>" + "<input type=\"text\" value="+ValorY+" size=\"1\">" + "</td>";
+            }
+          }
+        }
+        tabla += "</tr>";
+      }
+      tabla += "</table>";
+      document.getElementById("resultado").innerHTML = tabla;
+    }
+    function crear2() {
+      var NumPart = document.getElementById("NumParticipantes").value;
+      var tabla = "<table border=\"0\">";
+      var NumPart2 = parseInt (NumPart) + parseInt (1);
+      /* La i representa el número de iteraciones más cabecera más . La ponemos a 5 fijo por ahora */ 
+      for (i = 0; i <= 8; i++) {
+        tabla += "<tr>";
+        /* Si es 0 ponemos la cabecera */
+        if (i==0) {
+          // Ponemos el título de Iteración
+          tabla += "<td>" + "<input type=\"text\" value=Iter size=\"1\" style=\"background-color: #08f563;\">" + "</td>";
+          for (j = 1; j < NumPart2; j++) {
+            var GVal=j+1;
+            tabla += "<td>" + "<input type=\"text\" value=G"+j+" size=1 style=\"background-color: #08f563;\">" + "</td>";
+            tabla += "<td>" + "<input type=\"text\" id=\"C"+i+ "F"+j+"\" value=V size=1 style=\"background-color: #08f563;\">" + "</td>";
+            //document.getElementById('ID'+i+j).value='A'+GVal;
+          }
+        }
+        else {
+          // Ponemos el número de Iteración
+          tabla += "<td>" + "<input type=\"text\" value="+i+" size=\"1\" style=\"background-color: #08f563;\">" + "</td>";
+          for (j = 1; j < NumPart2; j++) {
+            var GVal=j+1;
+            tabla += "<td>" + "<input type=\"text\" id=\"ValCol"+i+ "Fila"+j+"\" size=1 style=\"background-color: #08f563;\">" + "</td>";
+            tabla += "<td>" + "<input type=\"text\" id=\"CalcCol"+i+ "Fila"+j+"\" size=1 style=\"background-color: #08f563;\">" + "</td>";
+            //document.getElementById('ID'+i+j).value='A'+GVal;
+          }
+        }
+        tabla += "</tr>";
+      }
+      tabla += "</table>";
+      document.getElementById("resultado2").innerHTML = tabla;
+    }
+    function limpiar() {
+      document.getElementById("resultado2").innerHTML = "";
+    }
+  
+  </script>
+<link rel="stylesheet" href="styles.3ff695c00d717f2d2a11.css"></head>
+<body>
+  <app-root></app-root>
+<script src="runtime-es2015.edb2fcf2778e7bf1d426.js" type="module"></script><script src="runtime-es5.edb2fcf2778e7bf1d426.js" nomodule defer></script><script src="polyfills-es5.ef4b1e1fc703b3ff76e3.js" nomodule defer></script><script src="polyfills-es2015.2987770fde9daa1d8a2e.js" type="module"></script><script src="main-es2015.63e81e7a1d86ba09f71a.js" type="module"></script><script src="main-es5.63e81e7a1d86ba09f71a.js" nomodule defer></script></body>
+</html>
