@@ -5,11 +5,16 @@ import { NewPageComponent } from './pages/new-page/new-page.component';
 
 
 const routes: Routes = [
-  { path: 'home', component: NewPageComponent }
+  { path: 'home', component: NewPageComponent },
+  { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+      RouterModule.forRoot( routes, { useHash: true } )
+  ],
+  exports: [
+      RouterModule
+  ]
 })
 export class AppRoutingModule { }
